@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+ <html>
+    <head>
+    <title>Wikal Cell</title>
+    <style>
+    * {margin:0; padding:0;}
+
+    body {
+     background-color:#fff;
+     font-family:Arial, Helvetica, sans-serif;
+     color:#000;
+    }
+
+    nav {
+     margin:auto;
+     text-align: center;
+     width: 100%;
+    } 
+
+    nav ul ul {
+     display: none;
+    }
+
+    nav ul li:hover > ul{
+    display: block;
+    width: 150px;
+    }
+
+    nav ul {
+     background: #53bd84;
+     padding: 0 20px;
+     list-style: none;
+     position: relative;
+     display: inline-table;
+     width: 100%;
+    }
+
+    nav ul:after {
+     content: ""; 
+     clear:both; 
+     display: block;
+    }
+
+    nav ul li{
+     float:left;
+    }
+
+    nav ul li:hover{
+     background:#666;
+    }
+
+    nav ul li:hover a{
+     color:#fff;
+    }
+
+    nav ul li a{
+     display: block;
+     padding: 25px;
+     color: #fff;
+     text-decoration: none;
+    }
+
+    nav ul ul{
+     background: #53bd84;
+     border-radius: 0px;
+     padding: 0;
+     position: absolute;
+     top:100%;
+    }
+
+    nav ul ul li{
+     float:none;
+     border-top: 1px soild #53bd84;
+     border-bottom: 1px solid #53bd84;
+     position: relative;
+    }
+
+    nav ul ul li a{
+     padding: 15px 40px;
+     color: #fff;
+    }
+
+    nav ul ul li a:hover{
+     background-color: #666;
+    }
+
+    nav ul ul ul{
+     position: absolute;
+     left: 100%;
+     top: 0;
+    }
+    </style>
+</head>
+<body>
+<header>
+<nav>
+    <ul>
+        <li><a href= "page1.html"=>Home & Tentang</a></li>
+        <li><a href=>Transaksi</a>
+            <ul>
+                <li><a href= "page2.html">Isi Pulsa & Riwayat Transaksi Pulsa</a></li>
+            </ul>
+        </li>
+        <li><a href="page2.html" onClick="return confirm ('Yakin ingin keluar Aplikasi?')">Logout</a></li>
+    </ul>
+</nav>
+</header>
+<div style="padding:30px;margin-top:10px;background-color:#ccffcc;height:5000px;">
+        <script src="files/js/jquery.min.js"></script>
+        <script src="files/bootstrap/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="files/bootstrap/css/bootstrap.min.css">
+    </head>
+    <body onload="muatDaftarData();">
+        
+        <div class="col-md-8 col-md-offset-2" ng-controller="listContactCtrl">
+            <div class="page-header">
+                <h1>
+		Isi Pulsa & Riwayat Transaksi Pulsa
+                </h1>
+                <ul class="nav nav-pills">
+                  <li><a id="nav-list-data" href="javascript:void(0);" onclick="gantiMenu('list-data');">Daftar Data</a></li>
+                  <li><a id="nav-tambah-data" href="javascript:void(0);" onclick="gantiMenu('tambah-data');">Tambah Data</a></li>
+                </ul>
+
+            </div>
+            <div id="tambah-data" class="well" style="display:none;">
+                <form id="form-data">
+                    <div id="name-group" class="form-group">
+                        <label>Nomor Tujuan:</label> 
+                        <input type="text" class="form-control" id="nama" name="nama" placeholder="contoh: 087887122298" /><br/>
+                    </div>
+                    <div id="alamat-group" class="form-group">
+                        <label>Nominal Pulsa:</label> 
+                        <input type="text" class="form-control" id="alamat" name="alamat" placeholder="contoh: 10000" /><br/>
+                    </div>
+                    <div id="ket-group" class="form-group">
+                        <label>Harga Pulsa:</label> 
+                        <textarea class="form-control" id="ket" name="ket" placeholder="contoh: 12000"></textarea><br/>
+                    </div>
+                    <input type="button" value="Simpan" onclick="simpanData();" class="btn btn-success btn-small"/>
+                    <input type="reset" value="Reset" onclick="" class="btn btn-warning btn-small"/>
+                </form>
+            </div>
+            <div id="edit-data" class="well" style="display:none;">
+                <form id="eform-data">
+				
+                    <div id="name-group" class="form-group" style="display:none;">
+                        <label>id data:</label> 
+                        <input type="text" class="form-control" id="eid_data" name="nama" placeholder="" /><br/>
+                    </div>
+				
+                    <div id="name-group" class="form-group">
+                        <label>Nomor Tujuan:</label> 
+                        <input type="text" class="form-control" id="enama" name="nama" placeholder="contoh: 087887122298" /><br/>
+                    </div>
+                    <div id="alamat-group" class="form-group">
+                        <label>Nominal Pulsa:</label> 
+                        <input type="text" class="form-control" id="ealamat" name="alamat" placeholder="contoh: 10000" /><br/>
+                    </div>
+                    <div id="ket-group" class="form-group">
+                        <label>Harga Pulsa:</label> 
+                        <textarea class="form-control" id="eket" name="ket" placeholder="contoh: 12000"></textarea><br/>
+                    </div>
+                    <input type="button" value="Simpan" onclick="simpanEditData();" class="btn btn-success btn-small"/>
+                    <input type="reset" value="Reset" onclick="" class="btn btn-warning btn-small"/>
+                    <input type="button" value="Cancel" onclick="gantiMenu('list-data');" class="btn btn-warning btn-small"/>
+                </form>
+            </div>
+            <div id="list-data" class="well">
+                Tidak ada data...
+            </div>
+        </div>
+        
+    </body>
+    <script type="text/javascript">
+        function muatDaftarData(){
+            if (localStorage.daftar_data && localStorage.id_data){
+            
+                daftar_data = JSON.parse(localStorage.getItem('daftar_data'));
+               
+                var data_app = "";
+                
+                if (daftar_data.length > 0){
+                    data_app = '<table class="table">';
+                    data_app += '<thead>'+
+                                        '<th>ID</th>'+
+                                        '<th>Nomor Tujuan</th>'+
+                                        '<th>Nominal Pulsa</th>'+
+                                        '<th>Harga Pulsa</th>'+
+                                        '<th>aksi</th>'+
+                                        '<th>aksi 2</th>'+
+                                      '</thead><tbody>';
+                                      
+                    for (i in daftar_data){
+                        data_app += '<tr>';
+                        data_app += '<td>'+ daftar_data[i].id_data + ' </td>'+
+                                          '<td>'+ daftar_data[i].nama + ' </td>'+
+                                          '<td>'+ daftar_data[i].alamat + ' </td>'+
+                                          '<td>'+ daftar_data[i].ket + ' </td>'+
+                                          '<td><a class="btn btn-danger btn-small" href="javascript:void(0)" onclick="hapusData(\''+daftar_data[i].id_data+'\')">Hapus</a></td>'+
+                                          '<td><a class="btn btn-warning btn-small" href="javascript:void(0)" onclick="editData(\''+daftar_data[i].id_data+'\')">Edit</a></td>';
+                        data_app += '</tr>';
+                        
+                    }
+                   data_app += '</tbody></table>';
+               
+                }
+                else {
+                    data_app = "Tidak ada data...";
+                }
+               
+                
+               $('#list-data').html(data_app);
+               $('#list-data').hide();
+               $('#list-data').fadeIn(100);
+            }
+        }
+		
+		function editData(id){
+		
+            if (localStorage.daftar_data && localStorage.id_data){
+                daftar_data = JSON.parse(localStorage.getItem('daftar_data'));			
+				idx_data = 0;
+                for (i in daftar_data){
+                    if (daftar_data[i].id_data == id){
+						$("#eid_data").val(daftar_data[i].id_data);
+						$("#enama").val(daftar_data[i].nama);
+						$("#ealamat").val(daftar_data[i].alamat);
+						$("#eket").val(daftar_data[i].ket);
+						daftar_data.splice(idx_data, 1);
+                    }
+                    idx_data ++;
+                }
+				gantiMenu('edit-data');
+				
+            }
+			
+		}
+        
+        
+        function simpanData(){
+            nama = $('#nama').val();
+            alamat = $('#alamat').val();
+            ket = $('#ket').val();
+            
+            if (localStorage.daftar_data && localStorage.id_data){
+                daftar_data = JSON.parse(localStorage.getItem('daftar_data'));
+                id_data = parseInt(localStorage.getItem('id_data'));
+            }
+            else {
+                daftar_data = [];
+                id_data = 0;
+            }
+
+            id_data ++;
+            daftar_data.push({'id_data':id_data, 'nama':nama, 'alamat':alamat, 'ket':ket});
+            localStorage.setItem('daftar_data', JSON.stringify(daftar_data));
+            localStorage.setItem('id_data', id_data);
+            document.getElementById('form-data').reset();
+            gantiMenu('list-data');
+            
+            return false;
+        }
+		
+        function simpanEditData(){
+            id_data = $('#eid_data').val();
+            nama = $('#enama').val();
+            alamat = $('#ealamat').val();
+            ket = $('#eket').val();
+            
+            daftar_data.push({'id_data':id_data, 'nama':nama, 'alamat':alamat, 'ket':ket});
+            localStorage.setItem('daftar_data', JSON.stringify(daftar_data));
+            document.getElementById('eform-data').reset();
+            gantiMenu('list-data');
+            
+            return false;
+        }
+        
+        function hapusData(id){
+            if (localStorage.daftar_data && localStorage.id_data){
+                daftar_data = JSON.parse(localStorage.getItem('daftar_data'));
+                
+                idx_data = 0;
+                for (i in daftar_data){
+                    if (daftar_data[i].id_data == id){
+                        daftar_data.splice(idx_data, 1);
+                    }
+                    idx_data ++;
+                }
+               
+                localStorage.setItem('daftar_data', JSON.stringify(daftar_data));
+                muatDaftarData();
+            }
+        }
+		
+
+        function gantiMenu(menu){
+            if (menu == "list-data"){
+                muatDaftarData();
+                $('#tambah-data').hide();
+                $('#list-data').fadeIn();
+				$('#edit-data').hide();
+            }
+            else if (menu == "tambah-data"){
+                $('#tambah-data').fadeIn();
+                $('#list-data').hide();
+				$('#edit-data').hide();
+            }else if (menu == "edit-data"){
+                $('#edit-data').fadeIn();
+                $('#tambah-data').hide();
+                $('#list-data').hide();
+            }
+        }
+    </script>
+ </html>

@@ -1,0 +1,146 @@
+<html>
+    <head>
+    <title>Wikal Cell</title>
+    <style>
+    * {margin:0; padding:0;}
+
+    body {
+     background-color:#fff;
+     font-family:Arial, Helvetica, sans-serif;
+     color:#000;
+    }
+
+    nav {
+     margin:auto;
+     text-align: center;
+     width: 100%;
+    } 
+
+    nav ul ul {
+     display: none;
+    }
+
+    nav ul li:hover > ul{
+    display: block;
+    width: 150px;
+    }
+
+    nav ul {
+     background: #53bd84;
+     padding: 0 20px;
+     list-style: none;
+     position: relative;
+     display: inline-table;
+     width: 100%;
+    }
+
+    nav ul:after {
+     content: ""; 
+     clear:both; 
+     display: block;
+    }
+
+    nav ul li{
+     float:left;
+    }
+
+    nav ul li:hover{
+     background:#666;
+    }
+
+    nav ul li:hover a{
+     color:#fff;
+    }
+
+    nav ul li a{
+     display: block;
+     padding: 25px;
+     color: #fff;
+     text-decoration: none;
+    }
+
+    nav ul ul{
+     background: #53bd84;
+     border-radius: 0px;
+     padding: 0;
+     position: absolute;
+     top:100%;
+    }
+
+    nav ul ul li{
+     float:none;
+     border-top: 1px soild #53bd84;
+     border-bottom: 1px solid #53bd84;
+     position: relative;
+    }
+
+    nav ul ul li a{
+     padding: 15px 40px;
+     color: #fff;
+    }
+
+    nav ul ul li a:hover{
+     background-color: #666;
+    }
+
+    nav ul ul ul{
+     position: absolute;
+     left: 100%;
+     top: 0;
+    }
+    </style>
+</head>
+<body>
+<header>
+<nav>
+    <ul>
+        <li><a href= "page1.html"=>Home & Tentang</a></li>
+        <li><a href=>Transaksi</a>
+            <ul>
+                <li><a href= "page2.html">Isi Pulsa & Riwayat Transaksi Pulsa</a></li>
+            </ul>
+        </li>
+        <li><a href="page1.html" onClick="return confirm ('Yakin ingin keluar Aplikasi?')">Logout</a></li>
+    </ul>
+</nav>
+</header>
+<div style="padding:30px;margin-top:10px;background-color:#ccffcc;height:5000px;">
+
+  <br><center><img src="logo1.png" /></center></br>
+  <center> <h1>Selamat Datang</h1></center>
+  <center><h4>Di Wikal Cell</h4></center>
+  <br><center><img src="logo2.jpg" /></center></br>
+  <br>Dengan aplikasi web ini Anda bisa mengisi pulsa, cara pembayarannya bisa datang ketempat/COD berupa uang.</p>
+  <p>Atau dengan transfer saldo OVO yang Anda punya kepada Saya.</br>
+
+<br><hr color="black"></br>
+	<center><h1>Tentang Pembuat</h1></center>
+ <br><hr color="black"></br>
+
+		<center><br><img src="ft.jpg" width="250px" height="250px"></br>
+			<p>Nama: Wikal Zulfikar</p>
+			<p>Tempat/Tanggal/Lahir: Bandung, 22 Juni 1999</p>
+			<p>Kuliah: Stmik & Politeknik LPKIA</p>
+			<p>Jurusan:Teknik Informatika</p>
+			<p>Contact Person (Whatsapp): 087887122298</p>
+			<p>No. OVO: 087887122298</p></center>
+			
+<br><hr color="black"></br>
+	<center><h1>Tentang Aplikasi</h1></center>
+<br><hr color="black"></br>
+		<center><br><img src="logo3.png" width="250px" height="250px"></br>
+			<p>Nama Aplikasi: Wikal.Cell</p>
+			<p>TIpe Aplikasi: Open Source</p>
+			<p>Versi Aplikasi: 1.0</p></center>
+			
+<br><hr color="black"></br>
+  <footer>
+	<center><div class="footer">
+		<small>&copy; Copyright - Wikal Cell 2019-2025 | Alright reserved.</small>
+	</div></center>
+</footer>
+<br><hr color="black"></br>
+  
+</div>
+</body>
+</html>
